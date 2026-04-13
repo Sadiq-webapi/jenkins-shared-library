@@ -1,14 +1,12 @@
-def call(String credentialsId, String region = 'ap-south-2') {
-    echo "Authenticating with AWS in ${region} using Username/Password credentials..."
-    
-    // Paste the block here:
+def call(String credentialsId, String clusterName, String region = 'ap-south-2') {
+    echo "Authenticating for cluster: ${clusterName}"
     withCredentials([usernamePassword(
         credentialsId: credentialsId, 
         passwordVariable: 'AWS_SECRET_ACCESS_KEY', 
         usernameVariable: 'AWS_ACCESS_KEY_ID'
     )]) {
-        // These shell commands now use the variables defined above
-        sh "aws eks update-kubeconfig --region ${region} --name clusters"
+        // Use the clusterName variable here!
+        sh "aws eks update-kubeconfig --region ${region} --name ${clusterName}"
         sh "aws sts get-caller-identity"
     }
 }
