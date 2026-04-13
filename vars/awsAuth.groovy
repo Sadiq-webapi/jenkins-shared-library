@@ -7,6 +7,7 @@ def call(String credentialsId, String clusterName, String region = 'ap-south-2')
     )]) {
         // Use the clusterName variable here!
         sh "aws eks update-kubeconfig --region ${region} --name ${clusterName}"
+      awsAuth('aws-ecr-creds', 'web-app', 'ap-south-2')
         sh "aws sts get-caller-identity"
     }
 }
