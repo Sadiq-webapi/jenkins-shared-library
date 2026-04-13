@@ -1,0 +1,12 @@
+def call(String imageName, String dockerUser) {
+    // This command runs in the CURRENT workspace
+    sh "docker build -t ${dockerUser}/${imageName}:latest ."
+    
+    // Login and Push
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', 
+                                     usernameVariable: 'USER', 
+                                     passwordVariable: 'PASS')]) {
+        sh "echo \$PASS | docker login -u \$USER --password-stdin"
+        sh "docker push ${dockerUser}/${imageName}:latest"
+    }
+}
