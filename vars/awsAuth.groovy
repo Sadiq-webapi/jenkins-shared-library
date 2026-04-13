@@ -1,13 +1,9 @@
-def call(String credentialsId, String clusterName, String region = 'ap-south-2') {
+def call(String awsCreds, String clusterName, String region) {
     echo "Authenticating for cluster: ${clusterName}"
-    withCredentials([usernamePassword(
-        credentialsId: credentialsId, 
-        passwordVariable: 'AWS_SECRET_ACCESS_KEY', 
-        usernameVariable: 'AWS_ACCESS_KEY_ID'
-    )]) {
-        // Use the clusterName variable here!
+    withCredentials([aws(credentialsId: awsCreds, 
+                        accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
+                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+        // Run the command directly, do NOT call awsAuth() here
         sh "aws eks update-kubeconfig --region ${region} --name ${clusterName}"
-      awsAuth('aws-ecr-creds', 'web-app', 'ap-south-2')
-        sh "aws sts get-caller-identity"
     }
 }
