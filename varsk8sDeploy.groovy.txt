@@ -1,0 +1,5 @@
+def call(String deploymentFile, String serviceFile) {
+    echo "Applying Kubernetes manifests..."
+    sh "kubectl apply -f ${deploymentFile}"
+    sh "kubectl apply -f ${serviceFile}"
+}

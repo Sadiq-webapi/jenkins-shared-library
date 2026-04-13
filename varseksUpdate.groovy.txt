@@ -1,0 +1,4 @@
+def call(String clusterName, String region = 'ap-south-2') {
+    echo "Configuring kubectl for ${clusterName}..."
+    sh "aws eks update-kubeconfig --region ${region} --name ${clusterName}"
+}
