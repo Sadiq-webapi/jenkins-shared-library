@@ -1,0 +1,4 @@
+# Use Nginx to serve the content
+FROM nginx:alpine
+# Copy your website files to the nginx folder
+COPY . /usr/share/nginx/html
